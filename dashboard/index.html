@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<header class="top">
+  <div class="top-inner">
+    <div>
+      <h1><span class="radar-dot" aria-hidden="true"></span>Token Radar</h1>
+      <p class="tagline">What a protocol's token would be worth if its record stayed as it is — and how to farm it before it launches.</p>
+    </div>
+    <div class="meta" id="meta"></div>
+  </div>
+</header>
+
+<main>
+  <section class="stats" id="stats" aria-label="Board summary"></section>
+
+  <section class="panel" aria-label="How the value is worked out">
+    <h2>How the value is worked out</h2>
+    <p class="model-line"><code>implied = (TVL / $1M)<sup>0.92</sup> × $1M × category multiple × growth × maturity × breadth</code></p>
+    <p>Every factor comes from the snapshot alone: TVL, the seven-day change, how long the protocol has run with no token, and how many chains it is on. No protocol name is special-cased — the same formula scores every row, and each protocol's detail view shows its own five factors so you can check the arithmetic. The implied value is this radar's claim, not a prediction that a token will be issued or when.</p>
+    <p class="fine">A protocol is listed as pre-token when its record carries no token — no market cap, no CoinGecko id, no symbol. That is what its record says, never proof it has none.</p>
+  </section>
+
+  <section class="panel controls" aria-label="Filter and sort the board">
+    <div class="control-row">
+      <label>Search <input id="q" type="search" placeholder="Name or slug…" autocomplete="off"></label>
+      <label>Category <select id="cat"><option value="">All categories</option></select></label>
+      <label>Chain <select id="chain"><option value="">All chains</option></select></label>
+      <label class="check"><input id="watchlist" type="checkbox"> Watchlist only</label>
+      <label class="check"><input id="gainers" type="checkbox"> Growing (7d &gt; 0%)</label>
+    </div>
+    <p class="count" id="count"></p>
+  </section>
+
+  <section class="panel" aria-label="Ranked board">
+    <h2>Ranked board <span class="sub" id="board-sub"></span></h2>
+    <div class="table-wrap">
+      <table id="board">
+        <thead>
+          <tr>
+            <th data-sort="rank" class="num sorted">Rank</th>
+            <th data-sort="name">Protocol</th>
+            <th data-sort="category">Category</th>
+            <th>Chains</th>
+            <th data-sort="tvl_usd" class="num">TVL</th>
+            <th data-sort="change_7d" class="num">7d</th>
+            <th data-sort="age_days" class="num">Age</th>
+            <th data-sort="implied_value_usd" class="num">Implied value</th>
+          </tr>
+        </thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p class="hint">Click any row for the protocol's detail view: the model's breakdown and its farm plan. Click a column heading to sort.</p>
+  </section>
+
+  <section class="panel detail" id="detail" aria-label="Protocol detail" hidden></section>
+
+  <section class="panel" aria-label="Protocols whose token already trades">
+    <h2>Already trading — not ranked</h2>
+    <p>These protocols record a token that already trades, so the board does not rank them. Their values below are the market's own market caps, not this radar's model.</p>
+    <div class="table-wrap">
+      <table id="live">
+        <thead>
+          <tr><th>Protocol</th><th>Category</th><th class="num">TVL</th><th class="num">Market cap</th><th class="num">7d</th></tr>
+        </thead>
+        <tbody id="live-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer class="fine">
+    <p>Snapshot: <span id="src"></span> · Watchlist floor $50,000,000 TVL · Model radar-2 · Built from the sealed snapshot only; nothing on this page fetches the network.</p>
+  </footer>
+</main>
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
